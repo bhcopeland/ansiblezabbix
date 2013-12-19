@@ -1,0 +1,18 @@
+---
+- name: Download Zabbix dpkg repo
+  get_url: url=http://repo.zabbix.com/zabbix/2.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_2.2-1+precise_all.deb dest=~/zabbix-release_2.2-1+precise_all.deb
+  sudo: yes
+
+- name: Install zabbix repo
+  shell: dpkg -i ~/zabbix-release_2.2-1+precise_all.deb
+  sudo: yes
+
+- name: Install zabbix agent
+  apt: pkg=zabbix-agent update_cache=yes
+  sudo: yes
+
+- name: Copy Zabbix agent config file
+  template: src=zabbix_agentd.conf dest=/etc/zabbix/zabbix_agentd.conf
+  notify:
+  - restart zabbix-agent
+  sudo: yes

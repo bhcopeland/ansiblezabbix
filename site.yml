@@ -1,0 +1,8 @@
+# Main site file - deploys everything
+---
+- name: install zabbix-agent
+  hosts: all
+  user: root
+
+  roles:
+    - zabbix-agent
